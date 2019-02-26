@@ -26,7 +26,8 @@ int GetNumOfWords(string input)
             count++;
         }
 
-        if (input.at(i) == '.'){
+        if (input.at(i) == '.')
+        {
             count++;
         }
     }
@@ -54,11 +55,26 @@ int FindText(string searchString, string input)
     }
     return count;
 }
-/*
-void ReplaceExclamation(string input)
-{
-}
 
+string ReplaceExclamation(string input)
+{
+    string fixedString= "";
+    int length = input.length();
+    for (int i = 0; i < length; i++)
+    {
+        if (input.at(i) == '!')
+        {
+            fixedString += ".";
+        }
+        else
+        {
+            fixedString += input.at(i);
+        }
+    }
+
+    return fixedString;
+}
+/*
 void ShortenSpace(string input)
 {
 }
@@ -103,17 +119,18 @@ void PrintMenu(string input)
              << " instances: " << FindText(searchString, input) << endl;
         PrintMenu(input);
         break;
-        /*
+
     case 'r':
-        ReplaceExclamation(input);
+        cout <<"Edited Text: " << ReplaceExclamation(input) << endl;
         break;
+        /*
     case 's':
         ShortenSpace(input);
         break;
-        */
+*/
     case 'q':
         break;
-        
+
     default:
         break;
     }
