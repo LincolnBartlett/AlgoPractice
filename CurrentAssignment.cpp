@@ -56,9 +56,9 @@ int FindText(string searchString, string input)
     return count;
 }
 
-string ReplaceExclamation(string input)
+string ReplaceExclamation(string &input)
 {
-    string fixedString= "";
+    string fixedString = "";
     int length = input.length();
     for (int i = 0; i < length; i++)
     {
@@ -71,8 +71,8 @@ string ReplaceExclamation(string input)
             fixedString += input.at(i);
         }
     }
-
-    return fixedString;
+    input = fixedString;
+    return input;
 }
 /*
 void ShortenSpace(string input)
@@ -113,15 +113,14 @@ void PrintMenu(string input)
 
         cin.ignore();
         cout << "Enter a word or phrase to be found:\n";
-        cin >> searchString;
-
+        getline(cin, searchString);
         cout << "\"" << searchString << "\""
              << " instances: " << FindText(searchString, input) << endl;
         PrintMenu(input);
         break;
 
     case 'r':
-        cout <<"Edited Text: " << ReplaceExclamation(input) << endl;
+        cout << "Edited Text: " << ReplaceExclamation(input) << endl;
         break;
         /*
     case 's':
