@@ -74,11 +74,24 @@ string ReplaceExclamation(string &input)
     input = fixedString;
     return input;
 }
-/*
-void ShortenSpace(string input)
+
+string ShortenSpace(string input)
 {
+    string fixedString = "";
+    int length = input.length();
+    for (int i = 0; i < length; i++)
+    {
+        if (input.at(i) == ' ' && input.at(i + 1) == ' ')
+        {
+        }
+        else
+        {
+            fixedString += input.at(i);
+        }
+    }
+    input = fixedString;
+    return input;
 }
-*/
 
 void PrintMenu(string input)
 {
@@ -121,12 +134,14 @@ void PrintMenu(string input)
 
     case 'r':
         cout << "Edited Text: " << ReplaceExclamation(input) << endl;
+        PrintMenu(input);
         break;
-        /*
+
     case 's':
-        ShortenSpace(input);
+        cout << "Edited Text: " << ShortenSpace(input) << endl;
+        PrintMenu(input);
         break;
-*/
+
     case 'q':
         break;
 
