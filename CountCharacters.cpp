@@ -1,6 +1,5 @@
 /*
 COUNT CHARACTERS
-Lincoln Bartlett
 
 Write a program whose input is a character and a string,
 and whose output indicates the number of times the character 

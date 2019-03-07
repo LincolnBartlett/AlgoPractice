@@ -1,6 +1,5 @@
 /*
 AUTO ACRONYM
-Lincoln Bartlett
 
 An acronym is a word formed from the initial letters of words in a set phrase. 
 Write a program whose input is a phrase and whose output is an acronym of the input. 

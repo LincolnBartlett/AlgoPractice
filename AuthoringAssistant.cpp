@@ -17,16 +17,11 @@ int GetNumOfNonWSCharacters(string input)
 
 int GetNumOfWords(string input)
 {
-    int count = 0;
+    int count = 1;
     int length = input.length();
     for (int i = 0; i < length; i++)
     {
         if (input.at(i) == 32 && input.at(i - 1) != 32)
-        {
-            count++;
-        }
-
-        if (input.at(i) == '.')
         {
             count++;
         }
@@ -75,7 +70,7 @@ string ReplaceExclamation(string &input)
     return input;
 }
 
-string ShortenSpace(string input)
+string ShortenSpace(string &input)
 {
     string fixedString = "";
     int length = input.length();
@@ -154,11 +149,12 @@ int main()
 {
     string input;
 
-    //cout << "Enter a sample text:\n" << endl;
+    cout << "Enter a sample text:\n"
+         << endl;
 
     getline(cin, input);
 
-    //cout << "You entered: " << input << endl;
+    cout << "You entered: " << input << endl;
 
     PrintMenu(input);
     return 0;

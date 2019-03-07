@@ -1,6 +1,5 @@
 /*
 MAX AND MIN
-LINCOLN BARTLETT
 
 Write a program whose inputs are three integers, 
 and whose outputs are the largest of the three values 
