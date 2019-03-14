@@ -1,5 +1,8 @@
 #include <iostream>
 #include <iomanip>
+#include <fstream>
+#include <string>
+
 using namespace std;
 
 //initial declaration
@@ -25,21 +28,19 @@ struct MovieData
     }
 };
 
-
 //generates output
 void printBanner()
 {
-    cout << setw(20) << "Title" << setw(20) << "Director" << setw(20) << "Year Released" << setw(20) << "Running Time" << endl;
+    cout << setw(25) << "Title" << setw(25) << "Director" << setw(20) << "Year Released" << setw(15) << "Running Time" << endl;
 }
 
 void movieList(MovieData list[], int SIZE)
 {
     for (int i = 0; i < SIZE; i++)
     {
-        cout << setw(20) << list[i].title << setw(20) << list[i].director << setw(20) << list[i].year << setw(20) << list[i].runTime << endl;
+        cout << setw(25) << list[i].title << setw(25) << list[i].director << setw(20) << list[i].year << setw(15) << list[i].runTime << endl;
     }
 }
-
 
 //bubble sort
 void sortList(MovieData list[], int SIZE)
@@ -65,24 +66,32 @@ int main()
 {
     const int SIZE = 5;
 
-    //Creating new struct variables
+    MovieData movieListArray[SIZE];
 
-    //using default constructor
-    MovieData movieOne;
+    ifstream movieListFile("MovieData.txt");
+    string title, director, year,spare;
+    int runTime;
+    int count = 0;
 
-    //add properties with dot operator
-    movieOne.title = "The Funny Kids";
-    movieOne.director = "Steven Shpeelberg";
-    movieOne.year = "1990";
-    movieOne.runTime = 200;
+    if (movieListFile.is_open())
+    {
+        while ((movieListFile)&&(count < SIZE))
+        {
+            getline(movieListFile,title,',');
+            getline(movieListFile,director,',');
+            getline(movieListFile,year,',');
+            movieListFile >> runTime;
+            getline(movieListFile,spare,'\n');
+            movieListArray[count] = MovieData(title, director, year,runTime);
+            count++;
+        }
+        movieListFile.close();
+    }
 
-    //using overloaded constructor
-    MovieData movieTwo("The Shining", "Steven King", "1980", 190);
-    MovieData movieThree("The Pond", "Larry Cosca", "1967", 183);
-    MovieData movieFour("Inception", "Recursive Robert", "2010", 220);
-    MovieData movieFive("Mary Poppins", "F F Coppola", "2001", 212);
+    else
+        cout << "Unable to open file";
 
-    MovieData movieListArray[SIZE] = {movieOne, movieTwo, movieThree, movieFour, movieFive};
+
 
     //output functions
     printBanner();
