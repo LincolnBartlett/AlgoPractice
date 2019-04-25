@@ -44,7 +44,7 @@ int main()
     {
         cout << data[i] << endl;
     }
-    reverse(dataPointer);
+    reverse(dataPointer);\
     cout << "The Reversed Array " << endl;
 
     for (int i = 0; i < SIZE; i++)

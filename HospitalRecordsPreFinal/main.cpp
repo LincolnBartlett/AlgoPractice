@@ -8,7 +8,8 @@ using namespace std;
 int main()
 {
     Record recordDataArray[SIZE];
-    char ch = ' ';
+    vector<Record> vectorData;
+    char character = ' ';
 
     int size = readDataFromFile("hospitaldata.txt", recordDataArray);
     if (size < 0)
@@ -17,19 +18,25 @@ int main()
         exit(-1);
     }
     else if (size == 0)
+    {
         cout << "Empty File" << endl;
+    }
+
     else
     {
         bubbleSort(recordDataArray, size);
         printData(recordDataArray, size - 1);
 
+        auto vectorStart = vectorData.begin();
 
-        vector<Record> vectorData;
-        auto it = vectorData.begin();
-        vectorData.insert(it, recordDataArray, recordDataArray + size - 1);
+        vectorData.insert(vectorStart, recordDataArray, recordDataArray + size - 1);
+
         for (int i = 0; i < vectorData.size(); i++)
-            while (ch != 'q')
-                ch = printMenu(vectorData);
+            while (character != 'q')
+            {
+                character = printMenu(vectorData);
+            }
+
         cout << "Good bye!" << endl;
     }
 }
