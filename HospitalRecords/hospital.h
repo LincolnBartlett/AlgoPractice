@@ -40,17 +40,6 @@ bool getRecordsFromFile(Record Patients[])
 
             Patients[i].prefix = (Patients[i].phoneNumber % 10000000 - Patients[i].phoneNumber % 10000) / 10000;
 
-            /*
-            cout
-                << Patients[i].patientNumber
-                << " " << Patients[i].patientName
-                << " " << Patients[i].patientID
-                << " " << Patients[i].phoneNumber
-                << " " << Patients[i].patientBill
-                << " " <<  Patients[i].prefix 
-                << endl;
-        
-            */
         }
         records.close();
         return true;
