@@ -8,6 +8,7 @@ using namespace std;
 
 struct Record
 {
+    
     int patientNumber;
     string patientName;
     string patientId;
@@ -15,6 +16,11 @@ struct Record
     double bill;
     Record()
     {
+        patientNumber = 0;
+        patientName = "";
+        patientId = "";
+        phoneNumber = 0;
+        bill = 0;
     }
     Record(int newpatientNumber, string newpatientName, string newpatientId, long newphoneNumber, double newbill)
     {
