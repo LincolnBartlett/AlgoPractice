@@ -1,3 +1,4 @@
+#define SIZE 4
 #include <iostream>
 #include <iomanip>
 #include "hospital.h"
@@ -7,35 +8,23 @@ using namespace std;
 
 int main()
 {
+
     Record recordDataArray[SIZE];
-    vector<Record> vectorData;
+    vector<Record> recordDataVector;
     char character = ' ';
 
-    int size = readDataFromFile("hospitaldata.txt", recordDataArray);
-    if (size < 0)
+    bool fileRead = getRecordsFromFile("hospitaldata.txt", recordDataArray);
+
+    if (fileRead)
     {
-        cout << "File Open Error";
-        exit(-1);
-    }
-    else if (size == 0)
-    {
-        cout << "Empty File" << endl;
-    }
+        bubbleSort(recordDataArray, SIZE);
+        printData(recordDataArray, SIZE);
+        recordDataVector.insert(recordDataVector.begin(), recordDataArray, recordDataArray + SIZE - 1);
 
-    else
-    {
-        bubbleSort(recordDataArray, size);
-        printData(recordDataArray, size - 1);
-
-        auto vectorStart = vectorData.begin();
-
-        vectorData.insert(vectorStart, recordDataArray, recordDataArray + size - 1);
-
-        for (int i = 0; i < vectorData.size(); i++)
-            while (character != 'q')
-            {
-                character = printMenu(vectorData);
-            }
+        while (character != 'q')
+        {
+            character = printMenu(recordDataVector);
+        }
 
         cout << "Good bye!" << endl;
     }

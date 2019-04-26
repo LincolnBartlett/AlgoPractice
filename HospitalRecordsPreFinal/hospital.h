@@ -6,8 +6,6 @@
 
 using namespace std;
 
-//Global Declarations
-int const SIZE = 4;
 struct Record
 {
     int patientNumber;
@@ -18,79 +16,72 @@ struct Record
     Record()
     {
     }
-    Record(int thispatientNumber, string thispatientName, string thispatientId, long thisphoneNumber, double thisbill)
+    Record(int newpatientNumber, string newpatientName, string newpatientId, long newphoneNumber, double newbill)
     {
-        patientNumber = thispatientNumber;
-        patientName = thispatientName;
-        patientId = thispatientId;
-        phoneNumber = thisphoneNumber;
-        bill = thisbill;
+        patientNumber = newpatientNumber;
+        patientName = newpatientName;
+        patientId = newpatientId;
+        phoneNumber = newphoneNumber;
+        bill = newbill;
     }
 };
 
 //Data Processing Functions
-int readDataFromFile(string fileName, Record dataArray[])
+bool getRecordsFromFile(string file, Record Patients[])
 {
-    int size = 0;
-    string s;
+    string junk;
+    ifstream records(file);
 
-    ifstream inputFile(fileName);
-    if (inputFile.fail())
+    if (records.is_open())
     {
-        cout << "Error reading file";
-        return -1;
+        for (int i = 0; i < SIZE; i++)
+        {
+            getline(records, junk, ',');
+            Patients[i].patientNumber = stoi(junk);
+            getline(records, Patients[i].patientName, ',');
+            getline(records, Patients[i].patientId, ',');
+            records >> Patients[i].phoneNumber;
+            getline(records, junk, '\n');
+            Patients[i].bill = stod(junk);
+        }
+        records.close();
+        return true;
     }
-
     else
     {
-        while (inputFile)
-        {
-            getline(inputFile, s, ',');
-            dataArray[size].patientNumber = stoi(s);
-            getline(inputFile, dataArray[size].patientName, ',');
-            getline(inputFile, dataArray[size].patientId, ',');
-            inputFile >> dataArray[size].phoneNumber;
-            getline(inputFile, s, '\n');
-            dataArray[size].bill = stod(s);
-
-            size++;
-        }
-        return size;
+        return false;
     }
 }
 
 int binarySearch(vector<Record> &vectorData, int number)
 {
 
-    int first, last, middle;
-    first = last = middle = 0;
-    bool found = false;
-    last = vectorData.size() - 1;
+    int bottom, top, middle;
+    bottom = top = middle = 0;
+    bool flag = false;
+    top = vectorData.size() - 1;
 
-    while (first <= last && !found)
+    while (bottom <= top && !flag)
     {
-        middle = (first + last) / 2;
+        middle = (bottom + top) / 2;
         if (vectorData[middle].patientNumber == number)
         {
-            found = true;
+            flag = true;
             return middle;
         }
         else if (number < vectorData[middle].patientNumber)
         {
-            last = middle - 1;
+            top = middle - 1;
         }
         else
         {
-            first = middle + 1;
+            bottom = middle + 1;
         }
     }
     return -1;
 }
 
-int getPrefixNum(long number)
-{
-    return (number / 10000) % 1000;
-}
+
 
 void bubbleSort(Record myArray[], int size)
 {
@@ -129,6 +120,12 @@ void bubbleSortVector(vector<Record> &vectorData)
     }
 }
 
+
+
+int getPhonePrefix(long number)
+{
+    return (number / 10000) % 1000;
+}
 //UI Components
 void printBanner()
 {
@@ -144,7 +141,7 @@ void displayData(vector<Record> &vectorData)
     int size = vectorData.size();
     for (int i = 0; i < size; i++)
     {
-        int prefix = getPrefixNum(vectorData[i].phoneNumber);
+        int prefix = getPhonePrefix(vectorData[i].phoneNumber);
         cout << setw(10) << vectorData[i].patientNumber << setw(20) << left << vectorData[i].patientName << setw(20) << left << vectorData[i].patientId << setw(10)
              << prefix << setw(10) << fixed << setprecision(2) << vectorData[i].bill << endl;
     }
@@ -155,7 +152,7 @@ void printData(Record dataArray[], int size)
     printBanner();
     for (int i = 0; i < size; i++)
     {
-        int prefix = getPrefixNum(dataArray[i].phoneNumber);
+        int prefix = getPhonePrefix(dataArray[i].phoneNumber);
         cout << setw(10) << dataArray[i].patientNumber << setw(20) << left << dataArray[i].patientName << setw(20) << left << dataArray[i].patientId << setw(10)
              << prefix << setw(10) << fixed << setprecision(2) << dataArray[i].bill << endl;
     }
@@ -163,14 +160,14 @@ void printData(Record dataArray[], int size)
 
 void displayPatient(vector<Record> &vectorData, int number)
 {
-    int found = binarySearch(vectorData, number);
-    if (found < 0)
+    int patientData = binarySearch(vectorData, number);
+    if (patientData < 0)
         cout << "Patient Not Found" << endl;
     else
     {
-        cout << "Found Patient " << vectorData[found].patientName << endl;
-        cout << setw(10) << vectorData[found].patientNumber << setw(20) << left << vectorData[found].patientName << setw(20) << left << vectorData[found].patientId << setw(10)
-             << getPrefixNum(vectorData[found].phoneNumber) << setw(10) << fixed << setprecision(2) << vectorData[found].bill << endl;
+        cout << "Found Patient " << vectorData[patientData].patientName << endl;
+        cout << setw(10) << vectorData[patientData].patientNumber << setw(20) << left << vectorData[patientData].patientName << setw(20) << left << vectorData[patientData].patientId << setw(10)
+             << getPhonePrefix(vectorData[patientData].phoneNumber) << setw(10) << fixed << setprecision(2) << vectorData[patientData].bill << endl;
     }
 }
 
@@ -234,13 +231,12 @@ void addPatient(vector<Record> &vectorData)
 
 void removePatient(vector<Record> &vectorData, int number)
 {
-    int found = binarySearch(vectorData, number);
-    if (found < 0)
+    int patientData = binarySearch(vectorData, number);
+    if (patientData < 0)
         cout << "Patient Not Found" << endl;
     else
     {
-        auto it = vectorData.begin();
-        vectorData.erase(it + found);
+        vectorData.erase(vectorData.begin() + patientData);
         cout << "Removed Patient " << number;
     }
 }
