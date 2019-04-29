@@ -19,7 +19,7 @@ int main()
     {
         bubbleSort(recordDataArray, SIZE);
         printData(recordDataArray, SIZE);
-        recordDataVector.insert(recordDataVector.begin(), recordDataArray, recordDataArray + SIZE - 1);
+        recordDataVector.insert(recordDataVector.begin(), recordDataArray, recordDataArray + SIZE);
 
         while (character != 'q')
         {

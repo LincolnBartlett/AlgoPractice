@@ -141,6 +141,7 @@ int getPhonePrefix(long number)
 {
     return (number / 10000) % 1000;
 }
+
 //UI Components
 void printBanner()
 {
@@ -390,9 +391,8 @@ void calculateFinalBill(vector<Record> &vectorData)
             finalAmount *= discountAmount;
         }
 
-        cout << setw(29) << left << "Final Total Bill" << right << ": $" << finalAmount << endl;
-        cout << left << setfill('-') << setw(42) << "\n"
-             << setfill(' ');
+        cout << setw(29) << left << "Final Total Bill" << right << ": $" << finalAmount << "\n" <<  setfill('-') << setw(42) << "\n"
+             << left << setfill(' ');
     }
 }
 
@@ -456,6 +456,7 @@ char printMenu(vector<Record> &vectorData)
         cin.clear();
         cin.ignore(999, '\n');
         choice = ' ';
+        break;
 
     case 'b':
         cout << "Calculate final bill : " << endl;
@@ -464,6 +465,7 @@ char printMenu(vector<Record> &vectorData)
         cin.clear();
         cin.ignore(999, '\n');
         choice = ' ';
+        break;
 
     default:
         break;
