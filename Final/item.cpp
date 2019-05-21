@@ -1,7 +1,10 @@
 #include <string>
 using namespace std;
+
 class Item
 {
+    
+private:
     string description;
     string barcode;
     double price;
@@ -13,11 +16,11 @@ public:
         barcode = "";
         price = 0;
     }
-    Item(string b, string d, double p)
+    Item(string barcode, string description, double price)
     {
-        description = d;
-        barcode = b;
-        price = p;
+        this->description = description;
+        this->barcode = barcode;
+        this->price = price;
     }
     string getDescription()
     {
@@ -31,8 +34,8 @@ public:
     {
         return barcode;
     }
-    void setPrice(double p)
+    void setPrice(double price)
     {
-        price = p;
+        this->price = price;
     }
 };

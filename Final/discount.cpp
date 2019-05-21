@@ -1,7 +1,11 @@
 #include <string>
+using namespace std;
+
 class Discount
 {
-    std::string barcode;
+    
+private:
+    string barcode;
     double percentage;
 
 public:
@@ -10,12 +14,12 @@ public:
         barcode = "";
         percentage = 0;
     }
-    Discount(std::string b, double p)
+    Discount(string barcode, double percentage)
     {
-        barcode = b;
-        percentage = p;
+        this->barcode = barcode;
+        this->percentage = percentage;
     }
-    std::string getBarcode()
+    string getBarcode()
     {
         return barcode;
     }
@@ -23,12 +27,12 @@ public:
     {
         return percentage;
     }
-    void setBarcode(std::string b)
+    void setBarcode(string barcode)
     {
-        barcode = b;
+        this->barcode = barcode;
     }
-    void setPercentage(double p)
+    void setPercentage(double percentage)
     {
-        percentage = p;
+        this->percentage = percentage;
     }
 };

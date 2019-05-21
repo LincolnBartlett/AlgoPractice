@@ -1,6 +1,6 @@
-
 #include <iomanip>
 #include "discount.cpp"
+
 bool fillCart(vector<Item> &cart)
 {
     ifstream infile("cart.dat");
@@ -8,9 +8,11 @@ bool fillCart(vector<Item> &cart)
     {
         while (!infile.eof())
         {
-            string description, barcode;
+            string description;
+            string barcode;
             string price;
             double cost;
+
             getline(infile, barcode, ',');
             getline(infile, description, ',');
             getline(infile, price, '\n');
@@ -25,20 +27,19 @@ bool fillCart(vector<Item> &cart)
         return false;
     }
 }
+
 bool fillDiscount(Discount savings[], int &size)
 {
     ifstream infile("discount.dat");
     string barcode;
     double percentage;
-    string p;
     int i = 0;
     if (infile)
     {
         while (!infile.eof())
         {
             getline(infile, barcode, ',');
-            getline(infile, p, '\n');
-            percentage = stod(p);
+            cin >> percentage;
             savings[i].setBarcode(barcode);
             savings[i].setPercentage(percentage);
             i++;
@@ -51,13 +52,15 @@ bool fillDiscount(Discount savings[], int &size)
         return false;
     }
 }
+
 void displayCart(vector<Item> &cart)
 {
     cout << "-------------------------" << endl;
-    for (auto iter = cart.begin(); iter < cart.end(); iter++)
-        cout << setw(20) << iter->getDescription() << " " << fixed << setprecision(2) << iter->getPrice() << endl;
+    for (auto i = cart.begin(); i < cart.end(); i++)
+        cout << setw(20) << i->getDescription() << " " << fixed << setprecision(2) << i->getPrice() << endl;
     cout << "--------------------------" << endl;
 }
+
 void displayDiscount(Discount savings[], int size)
 {
     for (int i = 0; i < size; i++)
@@ -66,6 +69,7 @@ void displayDiscount(Discount savings[], int size)
              << savings[i].getPercentage() << endl;
     }
 }
+
 double checkOut(vector<Item> &cart)
 {
     double total = 0;
@@ -73,6 +77,7 @@ double checkOut(vector<Item> &cart)
         total += cart[i].getPrice();
     return total;
 }
+
 void applyDiscount(vector<Item> &cart, Discount savings[], int size)
 {
     for (int i = 0; i < cart.size(); i++)
@@ -86,6 +91,7 @@ void applyDiscount(vector<Item> &cart, Discount savings[], int size)
         }
     }
 }
+
 void printBill(vector<Item> &cart, double total)
 {
     cout << "Printing Bill" << endl;
